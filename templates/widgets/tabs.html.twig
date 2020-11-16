@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a href="{{ path('home_index') }}" class="nav-link {% if app.request.attributes.get('_route') == 'home_index' %}active{% endif %}">Home</a>
+  </li>
+  <li class="nav-item">
+    <a href="{{ path('home_form') }}" class="nav-link {% if app.request.attributes.get('_route') == 'home_form' %}active{% endif %}">Form Sample</a>
+  </li>
+</ul>

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}Form Sample{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/tabs.html.twig' %}
+
+  <div class="container ml-0 px-0">
+    {{ form(form, {attr: {novalidate: true}}) }}
+  </div>
+{% endblock %}
