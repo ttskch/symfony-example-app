@@ -1,6 +1,5 @@
 package-lock.json
 yarn.lock
-composer.lock
 
 ###> symfony/framework-bundle ###
 /.env.local
