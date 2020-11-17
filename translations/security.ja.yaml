@@ -1,0 +1,4 @@
+# @see ../vendor/symfony/security-core/Resources/translations/security.ja.xlf
+
+Invalid credentials.: メールアドレスまたはパスワードが間違っています
+Email could not be found.: メールアドレスまたはパスワードが間違っています

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Login'|trans }}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-12 col-xl-8 offset-xl-2 px-5 pb-5 bg-light">
+        <h1 class="h3 my-5"><i class="fa fa-sign-in-alt"></i> {{ block('subtitle') }}</h1>
+
+        {% if error %}
+          <div class="alert alert-danger mb-4">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+          </div>
+        {% endif %}
+
+        <form method="post">
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">{{ 'Email'|trans }}</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" name="email" value="{{ last_username }}" required autofocus>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="password" class="col-sm-3 col-form-label">{{ 'Password'|trans }}</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+              <input type="checkbox" id="remember_me" name="_remember_me" checked>
+              <label for="remember_me">{{ 'Remember me'|trans }}</label>
+            </div>
+          </div>
+          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+          <div class="text-right">
+            <button type="submit" class="btn btn-primary">{{ 'Login'|trans }}</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
