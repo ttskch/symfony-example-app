@@ -1,7 +1,7 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: auto
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
@@ -21,18 +21,29 @@ security:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
             logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                path: user_logout
+                target: user_login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
             # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+            switch_user: true
+
+            remember_me:
+                secret: '%kernel.secret%'
+
+    role_hierarchy:
+        ROLE_USER:
+            - ROLE_ALLOWED_TO_VIEW
+        ROLE_ALLOWED_TO_ADMIN:
+            - ROLE_ALLOWED_TO_EDIT
+            - ROLE_ALLOWED_TO_EDIT_USER
+            - ROLE_ALLOWED_TO_SWITCH
+            - ROLE_CANARY
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/user/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: ROLE_USER }
