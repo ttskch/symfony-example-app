@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "cakephp/chronos": {
         "version": "2.0.6"
     },
@@ -89,6 +92,9 @@
             "version": "1.0",
             "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
         }
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v3.0.0"
     },
     "laminas/laminas-code": {
         "version": "3.5.0"
