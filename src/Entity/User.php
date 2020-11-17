@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\EntityListener\UserListener;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\EntityListeners({UserListener::class})
  */
 class User implements UserInterface
 {
@@ -34,6 +36,18 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     public ?string $password = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public ?string $displayName = null;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    public ?\DateTimeInterface $lastLoggedInAt = null;
+
+    public ?string $plainPassword = null;
 
     public function getId(): ?int
     {
@@ -89,6 +103,11 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
+    }
+
+    public function __toString(): string
+    {
+        return $this->displayName;
     }
 }
