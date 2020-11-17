@@ -78,6 +78,9 @@
         "post-create-project-cmd": [
             "@auto-scripts",
             "npm install"
+        ],
+        "compile": [
+            "php bin/console doctrine:migrations:migrate -n --no-debug"
         ]
     },
     "conflict": {
