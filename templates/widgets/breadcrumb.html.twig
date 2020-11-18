@@ -1,0 +1,17 @@
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="{{ path('home_index') }}">HOME</a>
+  </li>
+
+  {% for item in items|default([]) %}
+    {% set path = item.path|default('') %}
+
+    <li class="breadcrumb-item {% if not path %}active{% endif %}">
+      {% if path %}
+        <a href="{{ path }}">{{ item.label }}</a>
+      {% else %}
+        {{ item.label }}
+      {% endif %}
+    </li>
+  {% endfor %}
+</ol>

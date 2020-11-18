@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'User detail'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'User'|trans, path: path('user_index')},
+    {label: user},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT_USER') %}
+        <li class="nav-item">
+          <a href="{{ path('user_edit', {id: user.id}) }}" class="nav-link">{{ 'Edit'|trans }}</a>
+        </li>
+      {% endif %}
+    {% endblock %}
+    {% block dropdown_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_SWITCH') and user.id != app.user.id %}
+        <a href="{{ path('home_index', {_switch_user: user.email}) }}" class="dropdown-item">{{ 'Impersonate this user'|trans }}</a>
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+
+  {% include 'user/_detail.html.twig' %}
+{% endblock %}

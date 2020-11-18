@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'List users'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'User'|trans, path: path('user_index')},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT_USER') %}
+        <li class="nav-item">
+          <a href="{{ path('user_new') }}" class="nav-link">{{ 'Add'|trans }}</a>
+        </li>
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+      <tr>
+        <th>{{ 'Id'|trans }}</th>
+        <th>{{ 'Email'|trans }}</th>
+        <th>{{ 'Roles'|trans }}</th>
+        <th>{{ 'Display name'|trans }}</th>
+        <th>{{ 'Last logged in at'|trans }}</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            {% for role in user.roles %}
+              {% if role == 'ROLE_USER' %}
+                <span class="badge badge-secondary">{{ 'ROLE_ALLOWED_TO_VIEW'|trans }}</span>
+              {% else %}
+                <span class="badge badge-secondary">{{ role|trans }}</span>
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>{{ user.displayName }}</td>
+          <td>{{ user.lastLoggedInAt|date('Y/m/d H:i:s') }}</td>
+          <td>
+            <a href="{{ path('user_show', {id: user.id}) }}">{{ 'Show'|trans }}</a>
+            {% if is_granted('ROLE_ALLOWED_TO_EDIT_USER') %}
+              <a href="{{ path('user_edit', {id: user.id}) }}" class="ml-sm-3">{{ 'Edit'|trans }}</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="100" class="text-muted">{{ 'No data.'|trans }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

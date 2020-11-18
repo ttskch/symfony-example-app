@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Add user'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'User'|trans, path: path('user_index')},
+    {label: 'Add'|trans},
+  ]} %}
+
+  {% include 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+
+  <div class="container ml-0 px-0">
+    {% include 'user/_form.html.twig' with {type: 'new'} %}
+  </div>
+{% endblock %}

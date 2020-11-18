@@ -1,0 +1,46 @@
+{% if type == 'new' %}
+
+  {{ form_start(form) }}
+  {{ form_row(form.email) }}
+  {{ form_row(form.plainPassword) }}
+  {{ form_row(form.roles) }}
+  {{ form_row(form.displayName) }}
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
+    <a href="{{ path('user_index') }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+  </div>
+  {{ form_widget(form._token) }}
+  {{ form_end(form, {render_rest: false}) }}
+
+{% elseif type == 'edit' %}
+
+  {{ form_start(form) }}
+  {{ form_row(form.email) }}
+  <div class="form-group row">
+    <label class="col-form-label col-sm-3">{{ 'Password'|trans }}</label>
+    <div class="col-sm-9">
+      <div class="form-control-plaintext">
+        <a href="{{ path('user_change_password', {id: user.id}) }}" tabindex="-1">{{ 'Change the password'|trans }}</a>
+      </div>
+    </div>
+  </div>
+  {{ form_row(form.roles) }}
+  {{ form_row(form.displayName) }}
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
+    <a href="{{ path('user_show', {id: user.id}) }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+  </div>
+  {{ form_widget(form._token) }}
+  {{ form_end(form, {render_rest: false}) }}
+
+{% elseif type == 'change_password' %}
+
+  {{ form_start(form) }}
+  {{ form_rest(form) }}
+  <div class="float-right">
+    <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
+    <a href="{{ path('user_edit', {id: user.id}) }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+  </div>
+  {{ form_end(form) }}
+
+{% endif %}

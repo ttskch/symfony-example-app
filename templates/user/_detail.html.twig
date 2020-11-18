@@ -1,0 +1,42 @@
+<div class="table-responsive">
+  <table class="table table-sm table-hover">
+    <tbody>
+    <tr>
+      <th>{{ 'Id'|trans }}</th>
+      <td>{{ user.id }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Email'|trans }}</th>
+      <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+      <th> {{ 'Roles'|trans }}</th>
+      <td>
+        {% for role in user.roles %}
+          {% if role == 'ROLE_USER' %}
+            <span class="badge badge-secondary">{{ 'ROLE_ALLOWED_TO_VIEW'|trans }}</span>
+          {% else %}
+            <span class="badge badge-secondary">{{ role|trans }}</span>
+          {% endif %}
+        {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>{{ 'Display name'|trans }}</th>
+      <td>{{ user.displayName }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Last logged in at'|trans }}</th>
+      <td>{{ user.lastLoggedInAt|date('Y/m/d H:i:s') }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Created at'|trans }}</th>
+      <td>{{ user.createdAt|date('Y/m/d H:i:s') }}</td>
+    </tr>
+    <tr>
+      <th>{{ 'Updated at'|trans }}</th>
+      <td>{{ user.updatedAt|date('Y/m/d H:i:s') }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

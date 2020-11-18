@@ -8,11 +8,14 @@ use App\EntityListener\UserListener;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\EntityListeners({UserListener::class})
+ * @UniqueEntity(fields="email", message="This email is already used.", groups={"Default", "registration"})
  */
 class User implements UserInterface
 {
@@ -27,6 +30,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     public ?string $email = null;
 
@@ -50,6 +56,9 @@ class User implements UserInterface
      */
     public ?\DateTimeInterface $lastLoggedInAt = null;
 
+    /**
+     * @Assert\NotBlank(groups={"registration"})
+     */
     public ?string $plainPassword = null;
 
     public function getId(): ?int

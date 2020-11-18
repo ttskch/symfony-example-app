@@ -1,4 +1,42 @@
+ROLE_ALLOWED_TO_ADMIN: 管理者
+ROLE_ALLOWED_TO_EDIT_USER: ユーザー編集
+ROLE_ALLOWED_TO_EDIT: 編集
+ROLE_ALLOWED_TO_VIEW: 閲覧
+
 Login: ログイン
 Email: メールアドレス
 Password: パスワード
 Remember me: ログイン状態を記憶する
+
+Menu: メニュー
+
+User: ユーザー
+Id: ID
+Roles: アクセス権限
+Display name: 表示名
+Last logged in at: 最終ログイン日時
+Created at: 作成日時
+Updated at: 更新日時
+List users: ユーザー一覧
+Add user: ユーザー追加
+User detail: ユーザー詳細
+Edit user: ユーザー編集
+Change password: パスワード変更
+Add: 追加
+Show: 詳細
+Edit: 編集
+No data.: データがありません
+Impersonate this user: このユーザーで代理ログイン
+Please select: 選択してください
+Save: 保存
+Cancel: キャンセル
+Delete...: 削除...
+Are you sure you want to delete this item?: 本当に削除してよいですか？
+Change the password: パスワードを変更する
+Current password: 現在のパスワード
+New password: 新しいパスワード
+User is successfully added.: ユーザーの追加が完了しました。
+User is successfully updated.: ユーザーの編集が完了しました。
+Password is successfully updated.: パスワードの変更が完了しました。
+User is successfully deleted.: ユーザーの削除が完了しました。
+User cannot be deleted because it owns some related contents.: そのユーザーに紐づいているデータがあるため削除できません。

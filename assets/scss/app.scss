@@ -40,3 +40,18 @@ body {
 summary {
   outline: none;
 }
+
+.table-responsive {
+  .table {
+    thead {
+      th {
+        white-space: nowrap;
+      }
+    }
+    tbody, tfoot {
+      th, td {
+        word-break: keep-all;
+      }
+    }
+  }
+}
