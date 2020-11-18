@@ -59,3 +59,18 @@ html[lang="ja"] {
     }
   }
 }
+
+html[lang="ja"] {
+  .form-group {
+    > label,
+    > .col-form-label,
+      // for horizontal
+    > .row > .col-form-label {
+      font-weight: bolder;
+
+      &.required:after {
+        content: "必須" !important;
+      }
+    }
+  }
+}
