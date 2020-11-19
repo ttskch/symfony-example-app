@@ -1,0 +1,18 @@
+ttskch_paginator:
+  page:
+    name: page
+    range: 5
+  limit:
+    name: limit
+    default: 50
+  sort:
+    key:
+      name: sort
+    direction:
+      name: direction
+
+      # "asc" or "desc"
+      default: desc
+  template:
+    pager: '@TtskchPaginator/pager/bootstrap4.html.twig'
+    sortable: '@TtskchPaginator/sortable/default.html.twig'
