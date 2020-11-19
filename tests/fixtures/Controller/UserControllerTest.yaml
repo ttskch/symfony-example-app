@@ -1,0 +1,16 @@
+App\Entity\User:
+  user:
+    email: user@test.com
+    plainPassword: password
+  editor:
+    email: editor@test.com
+    plainPassword: password
+    roles: [ROLE_ALLOWED_TO_EDIT]
+  userEditor:
+    email: userEditor@test.com
+    plainPassword: password
+    roles: [ROLE_ALLOWED_TO_EDIT_USER]
+  admin:
+    email: admin@test.com
+    plainPassword: password
+    roles: [ROLE_ALLOWED_TO_ADMIN]
