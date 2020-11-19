@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Ttskch\PaginatorBundle\Context;
+use Ttskch\PaginatorBundle\Doctrine\Counter;
+use Ttskch\PaginatorBundle\Doctrine\Slicer;
 
 /**
  * @Route("/user", name="user_")
@@ -63,10 +66,13 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Context $context): Response
     {
+        $qb = $this->repository->createQueryBuilder('u');
+        $context->initialize('id', new Slicer($qb), new Counter($qb));
+
         return $this->render('user/index.html.twig', [
-            'users' => $this->repository->findAll(),
+            'slice' => $context->slice,
         ]);
     }
 

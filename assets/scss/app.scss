@@ -55,3 +55,12 @@ summary {
     }
   }
 }
+
+span.asc:after {
+  content: '\f0d8'; // fa-caret-up
+  font-family: "Font Awesome 5 Free";
+}
+span.desc:after {
+  content: '\f0d7'; // fa-caret-down
+  font-family: "Font Awesome 5 Free";
+}

@@ -21,16 +21,16 @@
     <table class="table table-sm table-hover">
       <thead>
       <tr>
-        <th>{{ 'Id'|trans }}</th>
-        <th>{{ 'Email'|trans }}</th>
-        <th>{{ 'Roles'|trans }}</th>
-        <th>{{ 'Display name'|trans }}</th>
-        <th>{{ 'Last logged in at'|trans }}</th>
+        <th>{{ ttskch_paginator_sortable('id', 'Id'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('email', 'Email'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('roles', 'Roles'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('displayName', 'Display name'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('lastLoggedInAt', 'Last logged in at'|trans) }}</th>
         <th></th>
       </tr>
       </thead>
       <tbody>
-      {% for user in users %}
+      {% for user in slice %}
         <tr>
           <td>{{ user.id }}</td>
           <td>{{ user.email }}</td>
@@ -60,4 +60,6 @@
       </tbody>
     </table>
   </div>
+
+  {{ ttskch_paginator_pager() }}
 {% endblock %}
