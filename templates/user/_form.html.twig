@@ -7,7 +7,7 @@
   {{ form_row(form.displayName) }}
   <div class="float-right">
     <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
-    <a href="{{ path('user_index') }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+    <a href="{{ pathOrReturnTo('user_index') }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
   </div>
   {{ form_widget(form._token) }}
   {{ form_end(form, {render_rest: false}) }}
@@ -28,7 +28,7 @@
   {{ form_row(form.displayName) }}
   <div class="float-right">
     <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
-    <a href="{{ path('user_show', {id: user.id}) }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+    <a href="{{ pathOrReturnTo('user_show', {id: user.id}) }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
   </div>
   {{ form_widget(form._token) }}
   {{ form_end(form, {render_rest: false}) }}
@@ -39,7 +39,7 @@
   {{ form_rest(form) }}
   <div class="float-right">
     <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
-    <a href="{{ path('user_edit', {id: user.id}) }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+    <a href="{{ pathOrReturnTo('user_edit', {id: user.id}) }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
   </div>
   {{ form_end(form) }}
 

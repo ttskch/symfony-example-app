@@ -33,3 +33,13 @@ services:
     App\EntityListener\:
         resource: '../src/EntityListener'
         tags: ['doctrine.orm.entity_listener']
+
+    #
+    # Twig extensions
+    #
+
+    App\Twig\AppExtension:
+        tags: ['twig.extension']
+
+    App\Twig\RoutingExtension:
+        tags: ['twig.extension']

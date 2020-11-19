@@ -9,6 +9,7 @@ use App\Form\UserChangePasswordType;
 use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Routing\ReturnToAwareControllerTrait;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -26,6 +27,8 @@ use Ttskch\PaginatorBundle\Doctrine\Slicer;
  */
 class UserController extends AbstractController
 {
+    use ReturnToAwareControllerTrait;
+
     private EntityManagerInterface $em;
     private UserRepository $repository;
 
@@ -91,7 +94,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'User is successfully added.');
 
-            return $this->redirectToRoute('user_index');
+            return $this->redirectToRouteOrReturn('user_index');
         }
 
         return $this->render('user/new.html.twig', [
@@ -124,7 +127,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'User is successfully updated.');
 
-            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+            return $this->redirectToRouteOrReturn('user_show', ['id' => $user->getId()]);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -150,7 +153,7 @@ class UserController extends AbstractController
 
             $this->addFlash('success', 'Password is successfully updated.');
 
-            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
+            return $this->redirectToRouteOrReturn('user_show', ['id' => $user->getId()]);
         }
 
         return $this->render('user/change_password.html.twig', [
@@ -176,6 +179,6 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->redirectToRoute('user_index');
+        return $this->redirectToRouteOrReturn('user_index');
     }
 }
