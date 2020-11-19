@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Profile'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Profile'|trans},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      <li class="nav-item">
+        <a href="{{ path('user_profile_edit') }}" class="nav-link">{{ 'Edit'|trans }}</a>
+      </li>
+    {% endblock %}
+  {% endembed %}
+
+  {% include 'user/_detail.html.twig' %}
+  {% endblock %}

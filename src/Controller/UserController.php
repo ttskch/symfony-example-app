@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserChangePasswordType;
 use App\Form\UserEditType;
+use App\Form\UserProfileEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Routing\ReturnToAwareControllerTrait;
@@ -64,6 +65,66 @@ class UserController extends AbstractController
     public function logout(): Response
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * @Route("/profile", name="profile_show", methods={"GET"})
+     */
+    public function profileShow(): Response
+    {
+        return $this->render('user/profile_show.html.twig', [
+            'user' => $this->getUser(),
+        ]);
+    }
+
+    /**
+     * @Route("/profile/edit", name="profile_edit", methods={"GET", "POST"})
+     */
+    public function profileEdit(Request $request): Response
+    {
+        $form = $this->createForm(UserProfileEditType::class, $user = $this->getUser());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Profile is successfully updated.');
+
+            return $this->redirectToRouteOrReturn('user_profile_show');
+        }
+
+        return $this->render('user/profile_edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/profile/change_password", name="profile_change_password", methods={"GET", "POST"})
+     */
+    public function profileChangePassword(Request $request): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserChangePasswordType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->plainPassword = $form->get('newPassword')->getData();
+
+            $this->em->persist($user);
+            $this->em->flush();
+
+            $this->addFlash('success', 'Password is successfully updated.');
+
+            return $this->redirectToRouteOrReturn('user_profile_show');
+        }
+
+        return $this->render('user/profile_change_password.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

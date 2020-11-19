@@ -9,6 +9,9 @@ Password: パスワード
 Remember me: ログイン状態を記憶する
 
 Menu: メニュー
+Profile: ユーザー情報
+End impersonation: 代理ログイン終了
+Logout: ログアウト
 
 User: ユーザー
 Id: ID
@@ -22,6 +25,7 @@ Add user: ユーザー追加
 User detail: ユーザー詳細
 Edit user: ユーザー編集
 Change password: パスワード変更
+Edit profile: ユーザー情報編集
 Add: 追加
 Show: 詳細
 Edit: 編集
@@ -40,3 +44,4 @@ User is successfully updated.: ユーザーの編集が完了しました。
 Password is successfully updated.: パスワードの変更が完了しました。
 User is successfully deleted.: ユーザーの削除が完了しました。
 User cannot be deleted because it owns some related contents.: そのユーザーに紐づいているデータがあるため削除できません。
+Profile is successfully updated.: ユーザー情報の編集が完了しました。
