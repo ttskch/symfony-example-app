@@ -686,6 +686,9 @@
     "theseer/tokenizer": {
         "version": "1.2.0"
     },
+    "ttskch/paginator-bundle": {
+        "version": "1.0.11"
+    },
     "twig/twig": {
         "version": "v2.4.4"
     },

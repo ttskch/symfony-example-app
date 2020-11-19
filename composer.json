@@ -28,7 +28,8 @@
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/webpack-encore-bundle": "^1.8",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "ttskch/paginator-bundle": "^1.0"
     },
     "require-dev": {
         "phpspec/prophecy-phpunit": "^2.0",
