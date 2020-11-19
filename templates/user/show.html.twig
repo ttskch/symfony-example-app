@@ -10,7 +10,7 @@
 
   {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
     {% block nav_items %}
-      {% if is_granted('ROLE_ALLOWED_TO_EDIT_USER') %}
+      {% if is_granted('EDIT', user) %}
         <li class="nav-item">
           <a href="{{ path('user_edit', {id: user.id}) }}" class="nav-link">{{ 'Edit'|trans }}</a>
         </li>

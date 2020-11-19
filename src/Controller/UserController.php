@@ -176,7 +176,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
-     * @IsGranted("ROLE_ALLOWED_TO_EDIT_USER")
+     * @IsGranted("EDIT", subject="user", statusCode=403)
      */
     public function edit(Request $request, User $user): Response
     {
@@ -199,7 +199,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/{id}/change_password", name="change_password", methods={"GET", "POST"})
-     * @IsGranted("ROLE_ALLOWED_TO_EDIT_USER")
+     * @IsGranted("EDIT", subject="user", statusCode=403)
      */
     public function changePassword(Request $request, User $user): Response
     {
@@ -225,7 +225,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="delete", methods={"GET", "DELETE"})
-     * @IsGranted("ROLE_ALLOWED_TO_EDIT_USER")
+     * @IsGranted("EDIT", subject="user", statusCode=403)
      */
     public function delete(Request $request, User $user): Response
     {
