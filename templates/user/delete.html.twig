@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Delete user'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'User'|trans, path: path('user_index')},
+    {label: user, path: path('user_show', {id: user.id})},
+    {label: 'Delete'|trans},
+  ]} %}
+
+  {% include 'widgets/content-navbar.html.twig' with { title: block('subtitle'), navbarClass: 'navbar-dark bg-danger' } %}
+
+  <div class="container ml-0 px-0">
+    {% include 'user/_detail.html.twig' %}
+
+    <div class="alert alert-warning">{{ 'If the user owns some related contents, let an alternate user own them.'|trans }}</div>
+
+    {% include 'user/_form.html.twig' with {type: 'delete'} %}
+  </div>
+{% endblock %}

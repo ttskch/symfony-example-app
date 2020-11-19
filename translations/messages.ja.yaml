@@ -24,18 +24,23 @@ List users: ユーザー一覧
 Add user: ユーザー追加
 User detail: ユーザー詳細
 Edit user: ユーザー編集
+Delete user: ユーザー削除
 Change password: パスワード変更
 Edit profile: ユーザー情報編集
 Add: 追加
 Show: 詳細
 Edit: 編集
+Delete: 削除
 No data.: データがありません
 Impersonate this user: このユーザーで代理ログイン
 Please select: 選択してください
 Save: 保存
 Cancel: キャンセル
 Delete...: 削除...
+Alternate user: 振替先ユーザー
+Do delete...: 削除を実行...
 Are you sure you want to delete this item?: 本当に削除してよいですか？
+If the user owns some related contents, let an alternate user own them.: 削除対象のユーザーに紐づいているデータがある場合は、一括して別のユーザーに振り替えます。
 Change the password: パスワードを変更する
 Current password: 現在のパスワード
 New password: 新しいパスワード
@@ -43,5 +48,4 @@ User is successfully added.: ユーザーの追加が完了しました。
 User is successfully updated.: ユーザーの編集が完了しました。
 Password is successfully updated.: パスワードの変更が完了しました。
 User is successfully deleted.: ユーザーの削除が完了しました。
-User cannot be deleted because it owns some related contents.: そのユーザーに紐づいているデータがあるため削除できません。
 Profile is successfully updated.: ユーザー情報の編集が完了しました。

@@ -6,12 +6,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserChangePasswordType;
+use App\Form\UserDeleteType;
 use App\Form\UserEditType;
 use App\Form\UserProfileEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Routing\ReturnToAwareControllerTrait;
-use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -224,22 +224,42 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/delete/{id}", name="delete", methods={"GET", "DELETE"})
      * @IsGranted("ROLE_ALLOWED_TO_EDIT_USER")
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
-            $this->em->remove($user);
+        $form = $this->createForm(UserDeleteType::class, null, [
+            'self' => $user,
+        ]);
+        $form->handleRequest($request);
 
-            try {
-                $this->em->flush();
-                $this->addFlash('success', 'User is successfully deleted.');
-            } catch (ForeignKeyConstraintViolationException $e) {
-                $this->addFlash('danger', 'User cannot be deleted because it owns some related contents.');
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var User $alternateUser */
+            $alternateUser = ($alternateUserId = $form->get('alternateUser')->getData())
+                ? $this->repository->find($alternateUserId)
+                : null
+            ;
+
+            if (!$alternateUser) {
+                throw new \RuntimeException();
             }
+
+            // if the user owns some related contents, let the alternate user own them.
+            // nothing for now.
+
+            $this->em->remove($user);
+            $this->em->flush();
+
+            $this->addFlash('success', 'User is successfully deleted.');
+
+            return $this->redirectToRouteOrReturn('user_index');
         }
 
-        return $this->redirectToRouteOrReturn('user_index');
+        return $this->render('user/delete.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 }
