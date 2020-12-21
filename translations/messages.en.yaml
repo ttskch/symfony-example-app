@@ -2,3 +2,8 @@ ROLE_ALLOWED_TO_ADMIN: Admin
 ROLE_ALLOWED_TO_EDIT_USER: User editable
 ROLE_ALLOWED_TO_EDIT: Editable
 ROLE_ALLOWED_TO_VIEW: Viewable
+
+CustomerConstant.STATE_INITIAL: Initial
+CustomerConstant.STATE_WIP: WIP
+CustomerConstant.STATE_COMPLETE: Complete
+CustomerConstant.STATE_FAILED: Failed

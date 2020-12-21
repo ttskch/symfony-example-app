@@ -49,3 +49,8 @@ User is successfully updated.: ユーザーの編集が完了しました。
 Password is successfully updated.: パスワードの変更が完了しました。
 User is successfully deleted.: ユーザーの削除が完了しました。
 Profile is successfully updated.: ユーザー情報の編集が完了しました。
+
+CustomerConstant.STATE_INITIAL: 未対応
+CustomerConstant.STATE_WIP: 対応中
+CustomerConstant.STATE_COMPLETE: 受注
+CustomerConstant.STATE_FAILED: 失注
