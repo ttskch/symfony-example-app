@@ -14,8 +14,10 @@
   <div class="container ml-0 px-0">
     {% include 'user/_form.html.twig' with {type: 'edit'} %}
 
-    <div class="float-left">
-      <a href="{{ path('user_delete', {id: user.id}) }}" class="btn btn-outline-danger">{{ 'Delete...'|trans }}</a>
-    </div>
+    {% if is_granted('DELETE', user) %}
+      <div class="float-left">
+        <a href="{{ path('user_delete', {id: user.id}) }}" class="btn btn-outline-danger">{{ 'Delete...'|trans }}</a>
+      </div>
+    {% endif %}
   </div>
 {% endblock %}

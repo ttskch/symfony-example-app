@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class UserVoter extends Voter
 {
     const EDIT = 'EDIT';
+    const DELETE = 'DELETE';
 
     private RoleManager $rm;
 
@@ -22,7 +23,10 @@ class UserVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        if (!in_array($attribute, [self::EDIT])) {
+        if (!in_array($attribute, [
+            self::EDIT,
+            self::DELETE,
+        ])) {
             return false;
         }
 
@@ -44,6 +48,8 @@ class UserVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
                 return $this->canEdit($subject, $user);
+            case self::DELETE:
+                return $this->canDelete($subject, $user);
         }
 
         throw new \LogicException();
@@ -63,5 +69,10 @@ class UserVoter extends Voter
         }
 
         return true;
+    }
+
+    private function canDelete(User $them, User $me): bool
+    {
+        return $this->canEdit($them, $me) && $them !== $me;
     }
 }

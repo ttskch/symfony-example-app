@@ -225,7 +225,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/delete/{id}", name="delete", methods={"GET", "DELETE"})
-     * @IsGranted("EDIT", subject="user", statusCode=403)
+     * @IsGranted("DELETE", subject="user", statusCode=403)
      */
     public function delete(Request $request, User $user): Response
     {
