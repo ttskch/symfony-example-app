@@ -1,0 +1,18 @@
+App\Entity\User:
+  user:
+    email: user@test.com
+    plainPassword: password
+  editor:
+    email: editor@test.com
+    plainPassword: password
+    roles: [ROLE_ALLOWED_TO_EDIT]
+
+App\Entity\Customer:
+  customer1:
+    state: CustomerConstant.STATE_INITIAL
+    name: test
+
+App\Entity\Customer\Person:
+  person1:
+    customer: '@customer1'
+    fullName: test
