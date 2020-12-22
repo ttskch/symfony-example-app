@@ -69,3 +69,8 @@ CustomerConstant.STATE_INITIAL: 未対応
 CustomerConstant.STATE_WIP: 対応中
 CustomerConstant.STATE_COMPLETE: 受注
 CustomerConstant.STATE_FAILED: 失注
+
+ProjectConstant.STATE_INITIAL: 未着手
+ProjectConstant.STATE_WIP: 作業中
+ProjectConstant.STATE_COMPLETE: 完了
+ProjectConstant.STATE_CANCELED: 中止

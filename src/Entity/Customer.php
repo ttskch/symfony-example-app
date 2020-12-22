@@ -53,9 +53,17 @@ class Customer
      */
     public Collection $people;
 
+    /**
+     * @var Collection|Project[]
+     *
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="customer", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    public Collection $projects;
+
     public function __construct()
     {
         $this->people = new ArrayCollection();
+        $this->projects = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,6 +86,27 @@ class Customer
         if ($this->people->removeElement($person)) {
             if ($person->customer === $this) {
                 $person->customer = null;
+            }
+        }
+
+        return $this;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->customer = $this;
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->removeElement($project)) {
+            if ($project->customer === $this) {
+                $project->customer = null;
             }
         }
 

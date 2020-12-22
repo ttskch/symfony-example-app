@@ -7,3 +7,8 @@ CustomerConstant.STATE_INITIAL: Initial
 CustomerConstant.STATE_WIP: WIP
 CustomerConstant.STATE_COMPLETE: Complete
 CustomerConstant.STATE_FAILED: Failed
+
+ProjectConstant.STATE_INITIAL: Initial
+ProjectConstant.STATE_WIP: WIP
+ProjectConstant.STATE_COMPLETE: Complete
+ProjectConstant.STATE_CANCELED: Canceled

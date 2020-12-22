@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use App\EntityListener\UserListener;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -61,9 +63,42 @@ class User implements UserInterface
      */
     public ?string $plainPassword = null;
 
+    /**
+     * @var Collection|Project[]
+     *
+     * @ORM\OneToMany(targetEntity=Project::class, mappedBy="user")
+     */
+    public Collection $projects;
+
+    public function __construct()
+    {
+        $this->projects = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->user = $this;
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->removeElement($project)) {
+            if ($project->user === $this) {
+                $project->user = null;
+            }
+        }
+
+        return $this;
     }
 
     /**
