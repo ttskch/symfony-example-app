@@ -1,0 +1,18 @@
+{{ form_start(form) }}
+{{ form_errors(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.state) }}
+<div class="form-group row">
+  {{ form_label(form.people) }}
+  <div class="col-sm-9">
+    {% include 'widgets/form-collection.html.twig' with {
+      form: form.people,
+    } %}
+  </div>
+</div>
+<div class="float-right">
+  <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
+  <a href="{{ cancelPath }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+</div>
+{{ form_widget(form._token) }}
+{{ form_end(form, {render_rest: false}) }}

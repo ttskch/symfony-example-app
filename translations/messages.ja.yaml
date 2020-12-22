@@ -50,6 +50,21 @@ Password is successfully updated.: パスワードの変更が完了しました
 User is successfully deleted.: ユーザーの削除が完了しました。
 Profile is successfully updated.: ユーザー情報の編集が完了しました。
 
+Customer: 顧客
+State: 状態
+Customer name: 顧客名
+Contact people: 先方担当者
+Full name: 氏名
+Tel: 電話番号
+Note: メモ
+List customers: 顧客一覧
+Add customer: 顧客追加
+Customer detail: 顧客詳細
+Edit customer: 顧客編集
+Customer is successfully added.: 顧客の追加が完了しました。
+Customer is successfully updated.: 顧客の編集が完了しました。
+Customer is successfully deleted.: 顧客の削除が完了しました。
+Customer cannot be deleted because there are some related contents.: その顧客に紐づいているデータがあるため削除できません。
 CustomerConstant.STATE_INITIAL: 未対応
 CustomerConstant.STATE_WIP: 対応中
 CustomerConstant.STATE_COMPLETE: 受注

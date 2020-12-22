@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Customer detail'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Customer'|trans, path: path('customer_index')},
+    {label: customer},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+        <li class="nav-item">
+          <a href="{{ path('customer_edit', {id: customer.id}) }}" class="nav-link">{{ 'Edit'|trans }}</a>
+        </li>
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover">
+      <tbody>
+      <tr>
+        <th>{{ 'Id'|trans }}</th>
+        <td>{{ customer.id }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'State'|trans }}</th>
+        <td>{{ customer.state|trans }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Customer name'|trans }}</th>
+        <td>{{ customer.name }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Contact people'|trans }}</th>
+        {% if customer.people|length > 0 %}
+          <td class="p-0">
+            <table class="table mb-0" style="margin-top:-1px">
+              <thead>
+              <tr>
+                <th>{{ 'Full name'|trans }}</th>
+                <th>{{ 'Tel'|trans }}</th>
+                <th>{{ 'Email'|trans }}</th>
+                <th>{{ 'Note'|trans }}</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for person in customer.people %}
+                <tr>
+                  <td>{{ person.fullName }}</td>
+                  <td>{{ person.tel }}</td>
+                  <td>{{ person.email }}</td>
+                  <td>{{ person.note|nl2br }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </td>
+        {% else %}
+          <td></td>
+        {% endif %}
+      </tr>
+      <tr>
+        <th>{{ 'Created at'|trans }}</th>
+        <td>{{ customer.createdAt|datetime }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Updated at'|trans }}</th>
+        <td>{{ customer.updatedAt|datetime }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

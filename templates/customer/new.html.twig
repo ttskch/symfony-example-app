@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Add customer'|trans }}{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('widgets_form-collection') }}
+{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Customer'|trans, path: path('customer_index')},
+    {label: 'Add'|trans},
+  ]} %}
+
+  {% include 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+
+  <div class="container ml-0 px-0">
+    {% include 'customer/_form.html.twig' with {cancelPath: pathOrReturnTo('customer_index')} %}
+  </div>
+{% endblock %}

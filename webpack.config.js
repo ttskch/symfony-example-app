@@ -34,6 +34,9 @@ Encore
     // styles
     './assets/scss/vendors.scss',
   ])
+  .addEntry('widgets_form-collection', [
+    './assets/js/widgets/form-collection.js',
+  ])
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

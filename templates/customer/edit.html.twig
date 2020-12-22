@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Edit customer'|trans }}{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('widgets_form-collection') }}
+{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Customer'|trans, path: path('customer_index')},
+    {label: customer, path: path('customer_show', {id: customer.id})},
+    {label: 'Edit'|trans},
+  ]} %}
+
+  {% include 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+
+  <div class="container ml-0 px-0">
+    {% include 'customer/_form.html.twig' with {cancelPath: pathOrReturnTo('customer_show', {id: customer.id})} %}
+
+    <div class="float-left">
+      {% include 'customer/_delete_form.html.twig' %}
+    </div>
+  </div>
+{% endblock %}

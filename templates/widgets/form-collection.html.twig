@@ -1,0 +1,25 @@
+{% macro template(form) %}
+  {% set wrap = form.children|length > 1 %}
+  <div class="{% if wrap %}card mb-3{% endif %} collection-item">
+    <div class="{% if wrap %}card-body mb-n3{% endif%} d-flex">
+      <div class="flex-grow-1">
+        {{ form_widget(form, {attr: {class: 'mb-2'}}) }}
+      </div>
+      <div class="ml-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary collection-item-remover">
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+{% endmacro %}
+
+<div class="form-collection">
+  {% for childForm in form.children %}
+    {{ _self.template(childForm) }}
+  {% endfor %}
+
+  <div class="placeholder"></div>
+  <button type="button" class="btn btn-block btn-outline-secondary m-0 collection-item-adder"><i class="fa fa-plus"></i> {{ 'Add'|trans }}</button>
+  <div class="prototype" data-prototype="{{ _self.template(form.vars.prototype)|e }}" data-last-index="{{ form|length - 1 }}" data-required-num="{{ requiredNum ?? 0 }}"></div>
+</div>

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'List customers'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Customer'|trans, path: path('customer_index')},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+        <li class="nav-item">
+          <a href="{{ pathWithReturnTo('customer_new') }}" class="nav-link">{{ 'Add'|trans }}</a>
+        </li>
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+      <tr>
+        <th>{{ ttskch_paginator_sortable('id', 'Id'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('state', 'State'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('name', 'Customer name'|trans) }}</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for customer in slice %}
+        <tr>
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.state|trans }}</td>
+          <td>{{ customer.name }}</td>
+          <td>
+            <a href="{{ path('customer_show', {id: customer.id}) }}">{{ 'Show'|trans }}</a>
+            {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+              <a href="{{ pathWithReturnTo('customer_edit', {id: customer.id}) }}" class="ml-sm-3">{{ 'Edit'|trans }}</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="100" class="text-muted">{{ 'No data.'|trans }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {{ ttskch_paginator_pager() }}
+{% endblock %}
