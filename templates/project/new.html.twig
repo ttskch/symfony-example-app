@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Add project'|trans }}{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('widgets_form-collection') }}
+{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Project'|trans, path: path('project_index')},
+    {label: 'Add'|trans},
+  ]} %}
+
+  {% include 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+
+  <div class="container ml-0 px-0">
+    {% include 'project/_form.html.twig' with {cancelPath: pathOrReturnTo('project_index')} %}
+  </div>
+{% endblock %}

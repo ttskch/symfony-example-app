@@ -70,6 +70,17 @@ CustomerConstant.STATE_WIP: 対応中
 CustomerConstant.STATE_COMPLETE: 受注
 CustomerConstant.STATE_FAILED: 失注
 
+Project: 案件
+Project name: 案件名
+Assignee: 担当者
+List projects: 案件一覧
+Add project: 案件追加
+Project detail: 案件詳細
+Edit project: 案件編集
+Project is successfully added.: 案件の追加が完了しました。
+Project is successfully updated.: 案件の編集が完了しました。
+Project is successfully deleted.: 案件の削除が完了しました。
+Project cannot be deleted because there are some related contents.: その案件に紐づいているデータがあるため削除できません。
 ProjectConstant.STATE_INITIAL: 未着手
 ProjectConstant.STATE_WIP: 作業中
 ProjectConstant.STATE_COMPLETE: 完了

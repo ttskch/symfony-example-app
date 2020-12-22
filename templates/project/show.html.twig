@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'Project detail'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Project'|trans, path: path('project_index')},
+    {label: project},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+        <li class="nav-item">
+          <a href="{{ path('project_edit', {id: project.id}) }}" class="nav-link">{{ 'Edit'|trans }}</a>
+        </li>
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover">
+      <tbody>
+      <tr>
+        <th>{{ 'Id'|trans }}</th>
+        <td>{{ project.id }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Customer'|trans }}</th>
+        <td>
+          {% if project.customer %}
+            <a href="{{ path('customer_show', {id: project.customer.id}) }}">{{ project.customer }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>{{ 'State'|trans }}</th>
+        <td>{{ project.state|trans }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Project name'|trans }}</th>
+        <td>{{ project.name }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Assignee'|trans }}</th>
+        <td>
+          {% if project.user %}
+            <a href="{{ path('user_show', {id: project.user.id}) }}">{{ project.user }}</a>
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>{{ 'Note'|trans }}</th>
+        <td>{{ project.note|nl2br }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Created at'|trans }}</th>
+        <td>{{ project.createdAt|datetime }}</td>
+      </tr>
+      <tr>
+        <th>{{ 'Updated at'|trans }}</th>
+        <td>{{ project.updatedAt|datetime }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

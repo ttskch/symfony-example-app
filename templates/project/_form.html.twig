@@ -1,0 +1,8 @@
+{{ form_start(form) }}
+{{ form_errors(form) }}
+{{ form_rest(form) }}
+<div class="float-right">
+  <button type="submit" class="btn btn-primary float-right ml-2">{{ 'Save'|trans }}</button>
+  <a href="{{ cancelPath }}" class="btn btn-outline-secondary">{{ 'Cancel'|trans }}</a>
+</div>
+{{ form_end(form) }}

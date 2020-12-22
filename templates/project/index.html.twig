@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block subtitle %}{{ 'List projects'|trans }}{% endblock %}
+
+{% block content_container %}
+  {% include 'widgets/breadcrumb.html.twig' with {items: [
+    {label: 'Project'|trans, path: path('project_index')},
+  ]} %}
+
+  {% embed 'widgets/content-navbar.html.twig' with { title: block('subtitle') } %}
+    {% block nav_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+        <li class="nav-item">
+          <a href="{{ pathWithReturnTo('project_new') }}" class="nav-link">{{ 'Add'|trans }}</a>
+        </li>
+      {% endif %}
+    {% endblock %}
+  {% endembed %}
+
+  <div class="table-responsive">
+    <table class="table table-sm table-hover">
+      <thead>
+      <tr>
+        <th>{{ ttskch_paginator_sortable('id', 'Id'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('customer.id', 'Customer'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('state', 'State'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('name', 'Project name'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('user.id', 'Assignee'|trans) }}</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for project in slice %}
+        <tr>
+          <td>{{ project.id }}</td>
+          <td>
+            {% if project.customer %}
+              <a href="{{ path('customer_show', {id: project.customer.id}) }}">{{ project.customer }}</a>
+            {% endif %}
+          </td>
+          <td>{{ project.state|trans }}</td>
+          <td>{{ project.name }}</td>
+          <td>
+            {% if project.user %}
+              <a href="{{ path('user_show', {id: project.user.id}) }}">{{ project.user }}</a>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ path('project_show', {id: project.id}) }}">{{ 'Show'|trans }}</a>
+            {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+              <a href="{{ pathWithReturnTo('project_edit', {id: project.id}) }}" class="ml-sm-3">{{ 'Edit'|trans }}</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="100" class="text-muted">{{ 'No data.'|trans }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {{ ttskch_paginator_pager() }}
+{% endblock %}
