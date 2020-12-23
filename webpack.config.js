@@ -37,6 +37,9 @@ Encore
   .addEntry('widgets_form-collection', [
     './assets/js/widgets/form-collection.js',
   ])
+  .addEntry('widgets_multiple-checker', [
+    './assets/js/widgets/multiple-checker.js',
+  ])
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

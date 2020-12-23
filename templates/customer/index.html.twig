@@ -2,6 +2,11 @@
 
 {% block subtitle %}{{ 'List customers'|trans }}{% endblock %}
 
+{% block javascripts %}
+  {{ parent() }}
+  {{ encore_entry_script_tags('widgets_multiple-checker') }}
+{% endblock %}
+
 {% block content_container %}
   {% include 'widgets/breadcrumb.html.twig' with {items: [
     {label: 'Customer'|trans, path: path('customer_index')},
@@ -13,6 +18,16 @@
         <li class="nav-item">
           <a href="{{ pathWithReturnTo('customer_new') }}" class="nav-link">{{ 'Add'|trans }}</a>
         </li>
+      {% endif %}
+    {% endblock %}
+    {% block dropdown_items %}
+      {% if is_granted('ROLE_ALLOWED_TO_EDIT') %}
+        <form action="{{ pathWithReturnTo('customer_delete_multiple') }}" method="post" onsubmit="return confirm('{{ 'Are you sure you want to delete these items?'|trans }}')">
+          <input type="hidden" name="_method" value="DELETE">
+          <input type="hidden" name="_token" value="{{ csrf_token('delete_multiple') }}">
+          <input type="hidden" name="ids">
+          <a class="dropdown-item multiple-checker-action" onclick="$(this).closest('form').submit();">{{ 'Delete items...'|trans }}</a>
+        </form>
       {% endif %}
     {% endblock %}
   {% endembed %}
@@ -30,6 +45,7 @@
     <table class="table table-sm table-hover">
       <thead>
       <tr>
+        <th><input type="checkbox" class="multiple-checker-all"></th>
         <th>{{ ttskch_paginator_sortable('c.id', 'Id'|trans) }}</th>
         <th>{{ ttskch_paginator_sortable('c.state', 'State'|trans) }}</th>
         <th>{{ ttskch_paginator_sortable('c.name', 'Customer name'|trans) }}</th>
@@ -39,6 +55,7 @@
       <tbody>
       {% for customer in slice %}
         <tr>
+          <td><input type="checkbox" class="multiple-checker" value="{{ customer.id }}"></td>
           <td>{{ customer.id }}</td>
           <td>{{ customer.state|trans }}</td>
           <td>{{ customer.name }}</td>

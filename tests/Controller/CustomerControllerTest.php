@@ -122,6 +122,33 @@ class CustomerControllerTest extends WebTestCase
         $this->assertStringContainsString('new name', $crawler->filter('#content th:contains("Customer name") + td')->text(null, true));
     }
 
+    public function testDeleteMultiple()
+    {
+        $client = self::createClient();
+        $client->request('DELETE', '/en/customer/multiple');
+        $this->assertResponseRedirects('/en/user/login');
+
+        $client = $this->createAuthorizedClient('user');
+        $client->request('DELETE', '/en/customer/multiple');
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+
+        // cannot delete without csrf token
+        $client = $this->createAuthorizedClient('editor');
+        $client->request('DELETE', '/en/customer/multiple', ['ids' => '1']);
+        $client->request('GET', '/en/customer/1');
+        $this->assertNotEquals(404, $client->getResponse()->getStatusCode());
+
+        // can delete in right way
+        $client = $this->createAuthorizedClient('editor');
+        $crawler = $client->request('GET', '/en/customer/');
+        $form = $crawler->filter('#content a:contains("Delete items...")')->closest('form')->form();
+        $client->submit($form, [
+            'ids' => '1',
+        ]);
+        $client->request('GET', '/en/customer/1');
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
+
     public function testDelete()
     {
         $client = self::createClient();

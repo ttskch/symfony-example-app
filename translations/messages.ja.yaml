@@ -44,6 +44,8 @@ If the user owns some related contents, let an alternate user own them.: 削除�
 Change the password: パスワードを変更する
 Current password: 現在のパスワード
 New password: 新しいパスワード
+Are you sure you want to delete these items?: 本当に削除してよいですか？
+Delete items...: 一括削除...
 User is successfully added.: ユーザーの追加が完了しました。
 User is successfully updated.: ユーザーの編集が完了しました。
 Password is successfully updated.: パスワードの変更が完了しました。
@@ -65,7 +67,9 @@ Edit customer: 顧客編集
 Customer is successfully added.: 顧客の追加が完了しました。
 Customer is successfully updated.: 顧客の編集が完了しました。
 Customer is successfully deleted.: 顧客の削除が完了しました。
-Customer cannot be deleted because there are some related contents.: その顧客に紐づいているデータがあるため削除できません。
+Customers are successfully deleted.: 顧客の一括削除が完了しました。
+Customer cannot be deleted because it owns some related contents.: その顧客に紐づいているデータがあるため削除できません。
+Some customer cannot be deleted because it owns some related contents.: その顧客に紐づいているデータがあるため削除できません。
 CustomerConstant.STATE_INITIAL: 未対応
 CustomerConstant.STATE_WIP: 対応中
 CustomerConstant.STATE_COMPLETE: 受注
@@ -82,7 +86,9 @@ Edit project: 案件編集
 Project is successfully added.: 案件の追加が完了しました。
 Project is successfully updated.: 案件の編集が完了しました。
 Project is successfully deleted.: 案件の削除が完了しました。
-Project cannot be deleted because there are some related contents.: その案件に紐づいているデータがあるため削除できません。
+Projects are successfully deleted.: 案件の一括削除が完了しました。
+Project cannot be deleted because it owns some related contents.: その案件に紐づいているデータがあるため削除できません。
+Some project cannot be deleted because it owns some related contents.: その案件に紐づいているデータがあるため削除できません。
 ProjectConstant.STATE_INITIAL: 未着手
 ProjectConstant.STATE_WIP: 作業中
 ProjectConstant.STATE_COMPLETE: 完了

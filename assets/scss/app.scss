@@ -64,3 +64,11 @@ span.desc:after {
   content: '\f0d7'; // fa-caret-down
   font-family: "Font Awesome 5 Free";
 }
+
+a {
+  cursor: pointer;
+}
+
+.hide-after:after {
+  display: none;
+}

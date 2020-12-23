@@ -127,6 +127,33 @@ class ProjectControllerTest extends WebTestCase
         $this->assertStringContainsString('new name', $crawler->filter('#content th:contains("Project name") + td')->text(null, true));
     }
 
+    public function testDeleteMultiple()
+    {
+        $client = self::createClient();
+        $client->request('DELETE', '/en/project/multiple');
+        $this->assertResponseRedirects('/en/user/login');
+
+        $client = $this->createAuthorizedClient('user');
+        $client->request('DELETE', '/en/project/multiple');
+        $this->assertEquals(403, $client->getResponse()->getStatusCode());
+
+        // cannot delete without csrf token
+        $client = $this->createAuthorizedClient('editor');
+        $client->request('DELETE', '/en/project/multiple', ['ids' => '1']);
+        $client->request('GET', '/en/project/1');
+        $this->assertNotEquals(404, $client->getResponse()->getStatusCode());
+
+        // can delete in right way
+        $client = $this->createAuthorizedClient('editor');
+        $crawler = $client->request('GET', '/en/project/');
+        $form = $crawler->filter('#content a:contains("Delete items...")')->closest('form')->form();
+        $client->submit($form, [
+            'ids' => '1',
+        ]);
+        $client->request('GET', '/en/project/1');
+        $this->assertEquals(404, $client->getResponse()->getStatusCode());
+    }
+
     public function testDelete()
     {
         $client = self::createClient();

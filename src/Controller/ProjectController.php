@@ -117,6 +117,30 @@ class ProjectController extends AbstractController
     }
 
     /**
+     * @Route("/multiple", name="delete_multiple", methods={"DELETE"})
+     * @IsGranted("ROLE_ALLOWED_TO_EDIT")
+     */
+    public function deleteMultiple(Request $request)
+    {
+        $ids = explode(',', $request->request->get('ids'));
+
+        if ($this->isCsrfTokenValid('delete_multiple', $request->request->get('_token'))) {
+            foreach ($ids as $id) {
+                $this->em->remove($this->repository->find($id));
+            }
+
+            try {
+                $this->em->flush();
+                $this->addFlash('success', 'Projects are successfully deleted.');
+            } catch (ForeignKeyConstraintViolationException $e) {
+                $this->addFlash('danger', 'Some project cannot be deleted because it owns some related contents.');
+            }
+        }
+
+        return $this->redirectToRouteOrReturn('project_index');
+    }
+
+    /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
      * @IsGranted("ROLE_ALLOWED_TO_EDIT")
      */
