@@ -17,15 +17,21 @@
     {% endblock %}
   {% endembed %}
 
+  {% embed 'widgets/search-form.html.twig' %}
+    {% block row1 %}
+      {{ form_widget(form.query) }}
+    {% endblock %}
+  {% endembed %}
+
   <div class="table-responsive">
     <table class="table table-sm table-hover">
       <thead>
       <tr>
-        <th>{{ ttskch_paginator_sortable('id', 'Id'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('email', 'Email'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('roles', 'Roles'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('displayName', 'Display name'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('lastLoggedInAt', 'Last logged in at'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('u.id', 'Id'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('u.email', 'Email'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('u.roles', 'Roles'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('u.displayName', 'Display name'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('u.lastLoggedInAt', 'Last logged in at'|trans) }}</th>
         <th></th>
       </tr>
       </thead>

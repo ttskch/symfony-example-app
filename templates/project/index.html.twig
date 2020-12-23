@@ -17,15 +17,35 @@
     {% endblock %}
   {% endembed %}
 
+  {% embed 'widgets/search-form.html.twig' %}
+    {% block row1_col1 %}
+      {{ form_widget(form.query) }}
+    {% endblock %}
+    {% block row1_col2 %}
+      {{ form_widget(form.states) }}
+    {% endblock %}
+    {% block row2_col1 %}
+      {{ form_widget(form.customers) }}
+    {% endblock %}
+    {% block row2_col2 %}
+      <div class="input-group">
+        {{ form_widget(form.users) }}
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="$('select#users').val(['{{ app.user.id }}']).change();">{{ 'Select yourself'|trans }}</button>
+        </div>
+      </div>
+    {% endblock %}
+  {% endembed %}
+
   <div class="table-responsive">
     <table class="table table-sm table-hover">
       <thead>
       <tr>
-        <th>{{ ttskch_paginator_sortable('id', 'Id'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('customer.id', 'Customer'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('state', 'State'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('name', 'Project name'|trans) }}</th>
-        <th>{{ ttskch_paginator_sortable('user.id', 'Assignee'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('p.id', 'Id'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('c.id', 'Customer'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('p.state', 'State'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('p.name', 'Project name'|trans) }}</th>
+        <th>{{ ttskch_paginator_sortable('u.id', 'Assignee'|trans) }}</th>
         <th></th>
       </tr>
       </thead>

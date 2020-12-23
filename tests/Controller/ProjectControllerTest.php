@@ -42,16 +42,24 @@ class ProjectControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('#content a[href*="edit"]')->count());
 
         // can sort
-        $client->request('GET', '/project/?sort=id');
+        $client->request('GET', '/en/project/?sort=p.id');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/project/?sort=customer.id');
+        $client->request('GET', '/en/project/?sort=c.id');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/project/?sort=state');
+        $client->request('GET', '/en/project/?sort=p.state');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/project/?sort=name');
+        $client->request('GET', '/en/project/?sort=p.name');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/project/?sort=user.id');
+        $client->request('GET', '/en/project/?sort=u.id');
         $this->assertResponseIsSuccessful();
+
+        // can search
+        $crawler = $client->request('GET', '/en/project/?query=test&states[]=ProjectConstant.STATE_INITIAL&customers[]=1&users[]=');
+        $this->assertEquals(1, $crawler->filter('#content table tbody tr')->count());
+        $this->assertStringNotContainsString('No data.', $crawler->filter('#content table tbody tr')->text(null, true));
+        $crawler = $client->request('GET', '/en/project/?query=xxxxxxxxxx');
+        $this->assertEquals(1, $crawler->filter('#content table tbody tr')->count());
+        $this->assertStringContainsString('No data.', $crawler->filter('#content table tbody tr')->text(null, true));
     }
 
     public function testNew()

@@ -145,16 +145,24 @@ class UserControllerTest extends WebTestCase
         $this->assertEquals(4, $crawler->filter('#content a[href*="edit"]')->count());
 
         // can sort
-        $client->request('GET', '/user/?sort=id');
+        $client->request('GET', '/en/user/?sort=u.id');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/user/?sort=email');
+        $client->request('GET', '/en/user/?sort=u.email');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/user/?sort=roles');
+        $client->request('GET', '/en/user/?sort=u.roles');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/user/?sort=displayName');
+        $client->request('GET', '/en/user/?sort=u.displayName');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/user/?sort=lastLoggedInAt');
+        $client->request('GET', '/en/user/?sort=u.lastLoggedInAt');
         $this->assertResponseIsSuccessful();
+
+        // can search
+        $crawler = $client->request('GET', '/en/user/?query=admin');
+        $this->assertEquals(1, $crawler->filter('#content table tbody tr')->count());
+        $this->assertStringNotContainsString('No data.', $crawler->filter('#content table tbody tr')->text(null, true));
+        $crawler = $client->request('GET', '/en/user/?query=xxxxxxxxxx');
+        $this->assertEquals(1, $crawler->filter('#content table tbody tr')->count());
+        $this->assertStringContainsString('No data.', $crawler->filter('#content table tbody tr')->text(null, true));
     }
 
     public function testNew()

@@ -7,6 +7,9 @@ namespace App\Controller;
 use App\Entity\Customer;
 use App\EntityConstant\CustomerConstant;
 use App\Form\CustomerType;
+use App\Pagination\Criteria\CustomerCriteria;
+use App\Pagination\Form\CustomerSearchType;
+use App\Pagination\Paginator\CustomerPaginator;
 use App\Repository\CustomerRepository;
 use App\Routing\ReturnToAwareControllerTrait;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
@@ -17,8 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Ttskch\PaginatorBundle\Context;
-use Ttskch\PaginatorBundle\Doctrine\Counter;
-use Ttskch\PaginatorBundle\Doctrine\Slicer;
 
 /**
  * @Route("/customer", name="customer_")
@@ -39,13 +40,19 @@ class CustomerController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(Context $context): Response
+    public function index(Context $context, CustomerPaginator $paginator): Response
     {
-        $qb = $this->repository->createQueryBuilder('c');
-        $context->initialize('id', new Slicer($qb), new Counter($qb));
+        $context->initialize(
+            'c.id',
+            [$paginator, 'sliceByCriteria'],
+            [$paginator, 'countByCriteria'],
+            CustomerCriteria::class,
+            CustomerSearchType::class,
+        );
 
         return $this->render('customer/index.html.twig', [
             'slice' => $context->slice,
+            'form' => $context->form->createView(),
         ]);
     }
 

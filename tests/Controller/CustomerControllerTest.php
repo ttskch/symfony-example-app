@@ -42,12 +42,20 @@ class CustomerControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('#content a[href*="edit"]')->count());
 
         // can sort
-        $client->request('GET', '/customer/?sort=id');
+        $client->request('GET', '/en/customer/?sort=c.id');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/customer/?sort=state');
+        $client->request('GET', '/en/customer/?sort=c.state');
         $this->assertResponseIsSuccessful();
-        $client->request('GET', '/customer/?sort=name');
+        $client->request('GET', '/en/customer/?sort=c.name');
         $this->assertResponseIsSuccessful();
+
+        // can search
+        $crawler = $client->request('GET', '/en/customer/?query=test&states[]=CustomerConstant.STATE_INITIAL');
+        $this->assertEquals(1, $crawler->filter('#content table tbody tr')->count());
+        $this->assertStringNotContainsString('No data.', $crawler->filter('#content table tbody tr')->text(null, true));
+        $crawler = $client->request('GET', '/en/customer/?query=xxxxxxxxxx');
+        $this->assertEquals(1, $crawler->filter('#content table tbody tr')->count());
+        $this->assertStringContainsString('No data.', $crawler->filter('#content table tbody tr')->text(null, true));
     }
 
     public function testNew()

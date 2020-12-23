@@ -10,6 +10,9 @@ use App\Form\UserDeleteType;
 use App\Form\UserEditType;
 use App\Form\UserProfileEditType;
 use App\Form\UserType;
+use App\Pagination\Criteria\UserCriteria;
+use App\Pagination\Form\UserSearchType;
+use App\Pagination\Paginator\UserPaginator;
 use App\Repository\UserRepository;
 use App\Routing\ReturnToAwareControllerTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,8 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Ttskch\PaginatorBundle\Context;
-use Ttskch\PaginatorBundle\Doctrine\Counter;
-use Ttskch\PaginatorBundle\Doctrine\Slicer;
 
 /**
  * @Route("/user", name="user_")
@@ -130,13 +131,19 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(Context $context): Response
+    public function index(Context $context, UserPaginator $paginator): Response
     {
-        $qb = $this->repository->createQueryBuilder('u');
-        $context->initialize('id', new Slicer($qb), new Counter($qb));
+        $context->initialize(
+            'u.id',
+            [$paginator, 'sliceByCriteria'],
+            [$paginator, 'countByCriteria'],
+            UserCriteria::class,
+            UserSearchType::class,
+        );
 
         return $this->render('user/index.html.twig', [
             'slice' => $context->slice,
+            'form' => $context->form->createView(),
         ]);
     }
 

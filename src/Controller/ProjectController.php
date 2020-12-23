@@ -7,6 +7,9 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\EntityConstant\ProjectConstant;
 use App\Form\ProjectType;
+use App\Pagination\Criteria\ProjectCriteria;
+use App\Pagination\Form\ProjectSearchType;
+use App\Pagination\Paginator\ProjectPaginator;
 use App\Repository\ProjectRepository;
 use App\Routing\ReturnToAwareControllerTrait;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
@@ -17,8 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Ttskch\PaginatorBundle\Context;
-use Ttskch\PaginatorBundle\Doctrine\Counter;
-use Ttskch\PaginatorBundle\Doctrine\Slicer;
 
 /**
  * @Route("/project", name="project_")
@@ -39,13 +40,19 @@ class ProjectController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(Context $context): Response
+    public function index(Context $context, ProjectPaginator $paginator): Response
     {
-        $qb = $this->repository->createQueryBuilder('p');
-        $context->initialize('id', new Slicer($qb), new Counter($qb));
+        $context->initialize(
+            'p.id',
+            [$paginator, 'sliceByCriteria'],
+            [$paginator, 'countByCriteria'],
+            ProjectCriteria::class,
+            ProjectSearchType::class,
+        );
 
         return $this->render('project/index.html.twig', [
             'slice' => $context->slice,
+            'form' => $context->form->createView(),
         ]);
     }
 
