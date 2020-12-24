@@ -8,7 +8,7 @@
     {%- block title %}
       {%- block subtitle %}{% endblock -%}
       {%- if block('subtitle') is not empty %} | {% endif -%}
-      {%- block site_title %}Symfony Skeleton{% endblock -%}
+      {%- block site_title %}Symfony Realworld Example{% endblock -%}
     {% endblock -%}
   </title>
   <meta name="description" content="{% block description %}{{ block('subtitle') }}{% endblock %}">
@@ -72,6 +72,16 @@
           </ul>
 
           <ul class="navbar-nav">
+            {% if app.request.attributes.get('_locale') != 'en' %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge(app.request.attributes.get('_route_params'))|merge({_locale: 'en'})) }}">English</a>
+              </li>
+            {% endif %}
+            {% if app.request.attributes.get('_locale') != 'ja' %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ path(app.request.attributes.get('_route'), app.request.query|merge(app.request.attributes.get('_route_params'))|merge({_locale: 'ja'})) }}">日本語</a>
+              </li>
+            {% endif %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown-2" role="button" data-toggle="dropdown">
                 <i class="fa fa-user"></i> {{ app.user }}
@@ -119,7 +129,7 @@
   <footer id="footer" class="container-fluid">
     {% block footer %}
       <div class="small text-muted text-right py-3">
-        <a href="http://ttskch.github.io" target="_blank" class="text-muted"><b>ttskch</b></a> &copy; {{ 'now'|date('Y') }} / <a href="https://github.com/ttskch/xxx" target="_blank" class="text-muted"><i class="fab fa-github"></i></a>
+        <a href="http://ttskch.github.io" target="_blank" class="text-muted"><b>ttskch</b></a> &copy; {{ 'now'|date('Y') }} / <a href="https://github.com/ttskch/symfony-example-app" target="_blank" class="text-muted"><i class="fab fa-github"></i></a>
       </div>
     {% endblock %}
   </footer>
