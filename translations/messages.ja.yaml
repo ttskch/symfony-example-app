@@ -96,3 +96,5 @@ ProjectConstant.STATE_CANCELED: 中止
 Select customers: 顧客を選択
 Select assignees: 担当者を選択
 Select yourself: 自分を選択
+
+Demo user cannot edit profile.: デモユーザーはユーザー情報を変更できません。

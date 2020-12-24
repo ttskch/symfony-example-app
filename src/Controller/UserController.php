@@ -55,8 +55,10 @@ class UserController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('user/login.html.twig', [
-            'last_username' => $lastUsername,
+            // 'last_username' => $lastUsername,
+            'last_username' => $this->getParameter('demo_username'),
             'error' => $error,
+            'password' => $this->getParameter('demo_password'),
         ]);
     }
 
@@ -83,10 +85,19 @@ class UserController extends AbstractController
      */
     public function profileEdit(Request $request): Response
     {
+        $username = $this->getUser()->getUsername();
+
         $form = $this->createForm(UserProfileEditType::class, $user = $this->getUser());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($username === $this->getParameter('demo_username')) {
+                $this->getUser()->email = $username;
+                $this->addFlash('danger', 'Demo user cannot edit profile.');
+
+                return $this->redirectToRouteOrReturn('user_profile_show');
+            }
+
             $this->em->persist($user);
             $this->em->flush();
 
@@ -112,6 +123,12 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($this->getUser()->getUsername() === $this->getParameter('demo_username')) {
+                $this->addFlash('danger', 'Demo user cannot edit profile.');
+
+                return $this->redirectToRouteOrReturn('user_profile_show');
+            }
+
             $user->plainPassword = $form->get('newPassword')->getData();
 
             $this->em->persist($user);
